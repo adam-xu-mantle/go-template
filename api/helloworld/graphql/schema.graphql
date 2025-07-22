@@ -1,0 +1,7 @@
+type Query {
+  sayHello(name: String!): HelloReply!
+}
+
+type HelloReply {
+  message: String!
+} 
