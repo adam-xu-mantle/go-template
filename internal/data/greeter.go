@@ -3,7 +3,7 @@ package data
 import (
 	"context"
 
-	"moho-router/internal/biz"
+	"go-template/internal/biz"
 
 	"github.com/go-kratos/kratos/v2/log"
 )

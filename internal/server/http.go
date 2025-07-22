@@ -6,12 +6,12 @@ import (
 	"net/http"
 	"time"
 
-	//"moho-router/api/helloworld/graphql/generated"
-	v1 "moho-router/api/helloworld/v1"
-	"moho-router/internal/conf"
-	"moho-router/internal/server/graphql"
-	"moho-router/internal/server/graphql/generated"
-	"moho-router/internal/service"
+	//"go-template/api/helloworld/graphql/generated"
+	v1 "go-template/api/helloworld/v1"
+	"go-template/internal/conf"
+	"go-template/internal/server/graphql"
+	"go-template/internal/server/graphql/generated"
+	"go-template/internal/service"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/gin-gonic/gin"

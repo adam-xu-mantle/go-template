@@ -21,4 +21,4 @@ resolver:
 models:
   HelloReply:
     model:
-      - moho-router/api/helloworld/v1.HelloReply 
+      - go-template/api/helloworld/v1.HelloReply 

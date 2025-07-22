@@ -6,8 +6,8 @@ package graphql
 
 import (
 	"context"
-	"moho-router/api/helloworld/v1"
-	"moho-router/internal/server/graphql/generated"
+	"go-template/internal/server/graphql/generated"
+	v1 "moho-router/api/helloworld/v1"
 )
 
 // SayHello is the resolver for the sayHello field.

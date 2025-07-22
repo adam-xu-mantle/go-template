@@ -1,7 +1,7 @@
 package data
 
 import (
-	"moho-router/internal/conf"
+	"go-template/internal/conf"
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"

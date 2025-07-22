@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"moho-router/internal/conf"
-	"moho-router/internal/server"
+	"go-template/internal/conf"
+	"go-template/internal/server"
 
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/config"
@@ -20,7 +20,7 @@ import (
 // go build -ldflags "-X main.Version=x.y.z"
 var (
 	// Name is the name of the compiled software.
-	Name = "moho-router"
+	Name = "go-template"
 	// Version is the version of the compiled software.
 	Version = "dev"
 	// flagconf is the config flag.
@@ -46,7 +46,7 @@ func newApp(logger log.Logger, gs *server.GRPCServer, hs *server.HTTPServer) *kr
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "serve",
-	Short: "Start the moho-router server",
+	Short: "Start the go-template server",
 	Long:  `Start the HTTP and gRPC servers with the specified configuration.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		runServer()
@@ -57,7 +57,7 @@ var rootCmd = &cobra.Command{
 var versionCmd = &cobra.Command{
 	Use:   "version",
 	Short: "Print the version information",
-	Long:  `Print the version information of moho-router.`,
+	Long:  `Print the version information of go-template.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("%s version %s\n", Name, Version)
 	},
@@ -217,7 +217,7 @@ func runMigrations() {
 }
 
 func main() {
-	fmt.Println("Starting moho-router...") // 添加这行用于调试
+	fmt.Println("Starting go-template...") // 添加这行用于调试
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 		os.Exit(1)

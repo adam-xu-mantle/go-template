@@ -7,7 +7,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"moho-router/api/helloworld/v1"
+	v1 "moho-router/api/helloworld/v1"
 	"strconv"
 	"sync"
 	"sync/atomic"
