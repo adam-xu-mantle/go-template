@@ -10,9 +10,11 @@ ifeq ($(GOHOSTOS), windows)
 	Git_Bash=$(subst \,/,$(subst cmd\,bin\bash.exe,$(dir $(shell where git))))
 	INTERNAL_PROTO_FILES=$(shell $(Git_Bash) -c "find internal -name *.proto")
 	API_PROTO_FILES=$(shell $(Git_Bash) -c "find api -name *.proto")
+	GRAPHQL_SCHEMA_FILES=$(shell $(Git_Bash) -c "find api -name gqlgen.yml")
 else
 	INTERNAL_PROTO_FILES=$(shell find internal -name *.proto)
 	API_PROTO_FILES=$(shell find api -name *.proto)
+	GRAPHQL_SCHEMA_FILES=$(shell find api -name gqlgen.yml)
 endif
 
 .PHONY: init
@@ -49,8 +51,7 @@ api:
 .PHONY: graphql
 # generate graphql
 graphql:
-	cd api/helloworld/graphql && gqlgen generate
-	
+	gqlgen generate --config $(GRAPHQL_SCHEMA_FILES)
 
 .PHONY: build
 # build
