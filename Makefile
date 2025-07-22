@@ -51,7 +51,10 @@ api:
 .PHONY: graphql
 # generate graphql
 graphql:
-	gqlgen generate --config $(GRAPHQL_SCHEMA_FILES)
+	@for config_file in $(GRAPHQL_SCHEMA_FILES); do \
+		echo "Generating GraphQL for config: $$config_file"; \
+		gqlgen generate --config $$config_file; \
+	done
 
 .PHONY: build
 # build
@@ -70,6 +73,7 @@ all:
 	make api;
 	make config;
 	make generate;
+	make build;
 
 # show help
 help:
