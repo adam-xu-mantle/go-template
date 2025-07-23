@@ -7,11 +7,11 @@
 package main
 
 import (
-	"go-template/internal/biz"
-	"go-template/internal/conf"
-	"go-template/internal/data"
-	"go-template/internal/server"
-	"go-template/internal/service"
+	"github.com/adam-xu-mantle/go-template/internal/biz"
+	"github.com/adam-xu-mantle/go-template/internal/conf"
+	"github.com/adam-xu-mantle/go-template/internal/data"
+	"github.com/adam-xu-mantle/go-template/internal/server"
+	"github.com/adam-xu-mantle/go-template/internal/service"
 
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"

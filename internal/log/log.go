@@ -1,8 +1,9 @@
 package log
 
 import (
-	"go-template/internal/conf"
 	"os"
+
+	"github.com/adam-xu-mantle/go-template/internal/conf"
 
 	kzap "github.com/go-kratos/kratos/contrib/log/zap/v2"
 	"github.com/go-kratos/kratos/v2/log"

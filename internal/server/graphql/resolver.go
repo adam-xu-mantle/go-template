@@ -1,7 +1,7 @@
 package graphql
 
 import (
-	"go-template/internal/service"
+	"github.com/adam-xu-mantle/go-template/internal/service"
 )
 
 // This file will not be regenerated automatically.

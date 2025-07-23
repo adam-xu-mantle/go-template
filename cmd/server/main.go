@@ -2,9 +2,6 @@ package main
 
 import (
 	"fmt"
-	"go-template/internal/conf"
-	"go-template/internal/log"
-	"go-template/internal/server"
 	"net/http"
 	"os"
 	"time"
@@ -15,6 +12,10 @@ import (
 	"github.com/go-kratos/kratos/v2/config"
 	"github.com/go-kratos/kratos/v2/config/file"
 	klog "github.com/go-kratos/kratos/v2/log"
+
+	"github.com/adam-xu-mantle/go-template/internal/conf"
+	"github.com/adam-xu-mantle/go-template/internal/log"
+	"github.com/adam-xu-mantle/go-template/internal/server"
 
 	"github.com/spf13/cobra"
 

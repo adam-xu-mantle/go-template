@@ -3,8 +3,9 @@ package service
 import (
 	"context"
 
-	v1 "go-template/api/helloworld/v1"
-	"go-template/internal/biz"
+	v1 "github.com/adam-xu-mantle/go-template/api/helloworld/v1"
+
+	"github.com/adam-xu-mantle/go-template/internal/biz"
 )
 
 // GreeterService is a greeter service.

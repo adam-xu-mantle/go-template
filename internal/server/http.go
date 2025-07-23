@@ -7,10 +7,11 @@ import (
 	"time"
 
 	//"go-template/api/helloworld/graphql/generated"
-	v1 "go-template/api/helloworld/v1"
-	"go-template/internal/conf"
-	"go-template/internal/metrics"
-	"go-template/internal/service"
+	v1 "github.com/adam-xu-mantle/go-template/api/helloworld/v1"
+
+	"github.com/adam-xu-mantle/go-template/internal/conf"
+	"github.com/adam-xu-mantle/go-template/internal/metrics"
+	"github.com/adam-xu-mantle/go-template/internal/service"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-kratos/kratos/v2/log"

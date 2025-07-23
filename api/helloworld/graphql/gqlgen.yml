@@ -21,4 +21,4 @@ resolver:
 models:
   HelloReply:
     model:
-      - go-template/api/helloworld/v1.HelloReply 
+      - github.com/adam-xu-mantle/go-template/api/helloworld/v1.HelloReply 

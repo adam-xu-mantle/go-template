@@ -7,12 +7,13 @@
 package conf
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	durationpb "google.golang.org/protobuf/types/known/durationpb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	durationpb "google.golang.org/protobuf/types/known/durationpb"
 )
 
 const (
@@ -689,7 +690,7 @@ const file_conf_conf_proto_rawDesc = "" +
 	"\n" +
 	"FormatType\x12\b\n" +
 	"\x04JSON\x10\x00\x12\v\n" +
-	"\aCONSOLE\x10\x01B Z\x1ego-template/internal/conf;confb\x06proto3"
+	"\aCONSOLE\x10\x01B Z\x1egithub.com/adam-xu-mantle/go-template/internal/conf;confb\x06proto3"
 
 var (
 	file_conf_conf_proto_rawDescOnce sync.Once

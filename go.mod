@@ -1,4 +1,4 @@
-module go-template
+module github.com/adam-xu-mantle/go-template
 
 go 1.24
 

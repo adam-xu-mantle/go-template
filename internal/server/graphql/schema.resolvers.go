@@ -6,8 +6,9 @@ package graphql
 
 import (
 	"context"
-	"go-template/api/helloworld/v1"
-	"go-template/internal/server/graphql/generated"
+
+	v1 "github.com/adam-xu-mantle/go-template/api/helloworld/v1"
+	"github.com/adam-xu-mantle/go-template/internal/server/graphql/generated"
 )
 
 // SayHello is the resolver for the sayHello field.

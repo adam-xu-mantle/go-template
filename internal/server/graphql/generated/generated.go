@@ -7,10 +7,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"go-template/api/helloworld/v1"
 	"strconv"
 	"sync"
 	"sync/atomic"
+
+	v1 "github.com/adam-xu-mantle/go-template/api/helloworld/v1"
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"

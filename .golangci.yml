@@ -27,8 +27,6 @@ linters-settings:
     locale: US
   lll:
     line-length: 140
-  goimports:
-    local-prefixes: github.com/your-org/your-project
   gocritic:
     enabled-tags:
       - diagnostic
@@ -69,6 +67,7 @@ linters:
     - unused        
     - unconvert     
     - gofmt       
+    - goimports    
     - misspell    
     - gosec          
     - goconst      
