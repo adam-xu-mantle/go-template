@@ -262,10 +262,10 @@ func runMigrations() {
 }
 
 func main() {
-	fmt.Println("Starting go-template...") // 添加这行用于调试
+	fmt.Println("Starting go-template...")
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 		os.Exit(1)
 	}
-	fmt.Println("Program completed successfully") // 添加这行用于调试
+	fmt.Println("Program completed successfully")
 }
