@@ -9,11 +9,9 @@ import (
 	//"go-template/api/helloworld/graphql/generated"
 	v1 "go-template/api/helloworld/v1"
 	"go-template/internal/conf"
-	"go-template/internal/server/graphql"
-	"go-template/internal/server/graphql/generated"
+	"go-template/internal/metrics"
 	"go-template/internal/service"
 
-	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/gin-gonic/gin"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/transport"
@@ -29,12 +27,46 @@ type HTTPServer struct {
 	logger  *log.Helper
 }
 
+// customMiddleware is a middleware that logs the request and response
+func customMiddleware(logger *log.Helper, metricer metrics.Metricer) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		done := metricer.RecordMetricRequests(c.Request.URL.Path, c.Request.Method)
+		defer done()
+
+		// Start timer
+		start := time.Now()
+		path := c.Request.URL.Path
+		raw := c.Request.URL.RawQuery
+
+		// Process request
+		c.Next()
+
+		// Calculate latency
+		latency := time.Since(start)
+
+		// Build log message
+		clientIP := c.ClientIP()
+		method := c.Request.Method
+		statusCode := c.Writer.Status()
+
+		if raw != "" {
+			path = path + "?" + raw
+		}
+
+		logger.Infow("clientIP", clientIP, "method", method, "path", path, "statusCode", statusCode, "latency", latency)
+
+	}
+}
+
 // NewHTTPServer creates a new Gin HTTP server.
 func NewHTTPServer(c *conf.Server, greeter *service.GreeterService, logger log.Logger) *HTTPServer {
 	gin.SetMode(gin.ReleaseMode)
 
 	r := gin.New()
-	r.Use(gin.Logger(), gin.Recovery())
+
+	metricer := metrics.NewMetricer("", "")
+	logHelper := log.NewHelper(logger)
+	r.Use(customMiddleware(logHelper, metricer), gin.Recovery())
 
 	// Set default values
 	network := "tcp"
@@ -58,7 +90,7 @@ func NewHTTPServer(c *conf.Server, greeter *service.GreeterService, logger log.L
 		network: network,
 		address: address,
 		timeout: timeout,
-		logger:  log.NewHelper(logger),
+		logger:  logHelper,
 	}
 
 	srv.server = &http.Server{
@@ -97,23 +129,23 @@ func (s *HTTPServer) registerRoutes(greeter *service.GreeterService) {
 	})
 
 	// GraphQL setup
-	resolver := graphql.NewResolver(greeter)
-	// NewDefaultServer is a demonstration only. Not for prod.
-	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{
-		Resolvers: resolver,
-	}))
+	// resolver := graphql.NewResolver(greeter)
+	// // NewDefaultServer is a demonstration only. Not for prod.
+	// srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{
+	// 	Resolvers: resolver,
+	// }))
 
 	// GraphQL endpoint
-	s.POST("/graphql", func(c *gin.Context) {
-		srv.ServeHTTP(c.Writer, c.Request)
-	})
+	// s.POST("/graphql", func(c *gin.Context) {
+	// 	srv.ServeHTTP(c.Writer, c.Request)
+	// })
 
 	// Health check endpoint
-	s.GET("/health", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"status": "ok",
-		})
-	})
+	// s.GET("/health", func(c *gin.Context) {
+	// 	c.JSON(http.StatusOK, gin.H{
+	// 		"status": "ok",
+	// 	})
+	// })
 }
 
 // Start implements the transport.Server interface

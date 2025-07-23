@@ -5,9 +5,36 @@ option go_package = "go-template/internal/conf;conf";
 
 import "google/protobuf/duration.proto";
 
+// Log levels corresponding to Kratos log.Level
+enum LogLevel {
+  INFO = 0;
+  DEBUG = -1;
+  WARN = 1;
+  ERROR = 2;
+  FATAL = 3;
+}
+
+// Format types for log output
+enum FormatType {
+  JSON = 0;
+  CONSOLE = 1;
+}
+
 message Bootstrap {
   Server server = 1;
   Data data = 2;
+  Log log = 3;
+  Metrics metrics = 4;
+}
+
+message Log {
+  LogLevel level = 1;
+  FormatType format = 2;
+}
+
+message Metrics {
+  string addr = 1;
+  bool disable = 3;
 }
 
 message Server {
