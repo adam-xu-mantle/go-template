@@ -7,7 +7,7 @@ package graphql
 import (
 	"context"
 
-	v1 "github.com/adam-xu-mantle/go-template/api/helloworld/v1"
+	"github.com/adam-xu-mantle/go-template/api/helloworld/v1"
 	"github.com/adam-xu-mantle/go-template/internal/server/graphql/generated"
 )
 

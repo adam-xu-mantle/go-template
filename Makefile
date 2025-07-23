@@ -27,7 +27,6 @@ init:
 	go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
 	go install github.com/google/wire/cmd/wire@latest
 	go install github.com/99designs/gqlgen@latest
-	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 
 .PHONY: config
 # generate internal proto
@@ -64,7 +63,8 @@ check:
 	@if command -v golangci-lint >/dev/null 2>&1; then \
 		golangci-lint run; \
 	else \
-		echo "golangci-lint not found. Install it with: go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest"; \
+		go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest; \
+		golangci-lint run; \
 	fi
 	@echo "Running tests..."
 	go test ./...

@@ -11,10 +11,9 @@ import (
 	"sync"
 	"sync/atomic"
 
-	v1 "github.com/adam-xu-mantle/go-template/api/helloworld/v1"
-
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"
+	"github.com/adam-xu-mantle/go-template/api/helloworld/v1"
 	gqlparser "github.com/vektah/gqlparser/v2"
 	"github.com/vektah/gqlparser/v2/ast"
 )
@@ -448,7 +447,7 @@ func (ec *executionContext) _Query_sayHello(ctx context.Context, field graphql.C
 	}
 	res := resTmp.(*v1.HelloReply)
 	fc.Result = res
-	return ec.marshalNHelloReply2ᚖgoᚑtemplateᚋapiᚋhelloworldᚋv1ᚐHelloReply(ctx, field.Selections, res)
+	return ec.marshalNHelloReply2ᚖgithubᚗcomᚋadamᚑxuᚑmantleᚋgoᚑtemplateᚋapiᚋhelloworldᚋv1ᚐHelloReply(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_sayHello(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3031,11 +3030,11 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
-func (ec *executionContext) marshalNHelloReply2goᚑtemplateᚋapiᚋhelloworldᚋv1ᚐHelloReply(ctx context.Context, sel ast.SelectionSet, v v1.HelloReply) graphql.Marshaler {
+func (ec *executionContext) marshalNHelloReply2githubᚗcomᚋadamᚑxuᚑmantleᚋgoᚑtemplateᚋapiᚋhelloworldᚋv1ᚐHelloReply(ctx context.Context, sel ast.SelectionSet, v v1.HelloReply) graphql.Marshaler {
 	return ec._HelloReply(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNHelloReply2ᚖgoᚑtemplateᚋapiᚋhelloworldᚋv1ᚐHelloReply(ctx context.Context, sel ast.SelectionSet, v *v1.HelloReply) graphql.Marshaler {
+func (ec *executionContext) marshalNHelloReply2ᚖgithubᚗcomᚋadamᚑxuᚑmantleᚋgoᚑtemplateᚋapiᚋhelloworldᚋv1ᚐHelloReply(ctx context.Context, sel ast.SelectionSet, v *v1.HelloReply) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")

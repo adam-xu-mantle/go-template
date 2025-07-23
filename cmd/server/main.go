@@ -14,6 +14,7 @@ import (
 	klog "github.com/go-kratos/kratos/v2/log"
 
 	"github.com/adam-xu-mantle/go-template/internal/conf"
+	"github.com/adam-xu-mantle/go-template/internal/data"
 	"github.com/adam-xu-mantle/go-template/internal/log"
 	"github.com/adam-xu-mantle/go-template/internal/server"
 
@@ -30,6 +31,8 @@ var (
 	Version = "dev"
 	// flagconf is the config flag.
 	flagconf string
+
+	migration string
 
 	id, _ = os.Hostname()
 )
@@ -91,6 +94,7 @@ var migrateCmd = &cobra.Command{
 func init() {
 	// Add persistent flags to root command
 	rootCmd.PersistentFlags().StringVarP(&flagconf, "conf", "c", "./configs", "config path, eg: -conf config.yaml")
+	rootCmd.PersistentFlags().StringVarP(&migration, "migration", "m", "./migrations", "run database migration in the given folder, e.g. -migration=./migrations")
 
 	// Add subcommands
 	rootCmd.AddCommand(versionCmd)
@@ -145,7 +149,6 @@ func runServer() {
 		"ts", klog.DefaultTimestamp,
 		"caller", klog.DefaultCaller,
 		"service.id", id,
-		"service.name", Name,
 		"service.version", Version,
 	)
 	klog.SetLogger(logger)
@@ -251,14 +254,17 @@ func runMigrations() {
 	fmt.Printf("Database driver: %s\n", bc.Data.Database.Driver)
 	fmt.Printf("Migration files location: ./migrations/\n")
 
-	// TODO: Implement actual migration logic here
-	// For now, just print information about what would be done
-	fmt.Println("Found migration files:")
-	fmt.Println("  - migrations/README.md")
+	logger := log.NewLogger(bc.Log)
 
-	fmt.Println("Migration implementation is pending.")
-	fmt.Println("You can implement actual database migration logic in the runMigrations() function.")
-	fmt.Println("Migration command is ready to be extended!")
+	data, _, err := data.NewData(bc.Data, logger)
+	if err != nil {
+		panic(err)
+	}
+
+	if err := data.ExecuteSQLMigration(migration); err != nil {
+		panic(err)
+	}
+
 }
 
 func main() {
