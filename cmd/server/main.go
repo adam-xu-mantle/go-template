@@ -2,16 +2,19 @@ package main
 
 import (
 	"fmt"
+	"go-template/internal/conf"
+	"go-template/internal/log"
+	"go-template/internal/server"
+	"net/http"
 	"os"
 
-	"moho-router/internal/conf"
-	"moho-router/internal/server"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/config"
 	"github.com/go-kratos/kratos/v2/config/file"
-	"github.com/go-kratos/kratos/v2/log"
-	"github.com/go-kratos/kratos/v2/middleware/tracing"
+	klog "github.com/go-kratos/kratos/v2/log"
+
 	"github.com/spf13/cobra"
 
 	_ "go.uber.org/automaxprocs"
@@ -20,7 +23,7 @@ import (
 // go build -ldflags "-X main.Version=x.y.z"
 var (
 	// Name is the name of the compiled software.
-	Name = "moho-router"
+	Name = "go-template"
 	// Version is the version of the compiled software.
 	Version = "dev"
 	// flagconf is the config flag.
@@ -29,7 +32,7 @@ var (
 	id, _ = os.Hostname()
 )
 
-func newApp(logger log.Logger, gs *server.GRPCServer, hs *server.HTTPServer) *kratos.App {
+func newApp(logger klog.Logger, gs *server.GRPCServer, hs *server.HTTPServer) *kratos.App {
 	return kratos.New(
 		kratos.ID(id),
 		kratos.Name(Name),
@@ -46,7 +49,7 @@ func newApp(logger log.Logger, gs *server.GRPCServer, hs *server.HTTPServer) *kr
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "serve",
-	Short: "Start the moho-router server",
+	Short: "Start the go-template server",
 	Long:  `Start the HTTP and gRPC servers with the specified configuration.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		runServer()
@@ -57,7 +60,7 @@ var rootCmd = &cobra.Command{
 var versionCmd = &cobra.Command{
 	Use:   "version",
 	Short: "Print the version information",
-	Long:  `Print the version information of moho-router.`,
+	Long:  `Print the version information of go-template.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("%s version %s\n", Name, Version)
 	},
@@ -94,18 +97,10 @@ func init() {
 }
 
 func runServer() {
-	logger := log.With(log.NewStdLogger(os.Stdout),
-		"ts", log.DefaultTimestamp,
-		"caller", log.DefaultCaller,
-		"service.id", id,
-		"service.name", Name,
-		"service.version", Version,
-		"trace.id", tracing.TraceID(),
-		"span.id", tracing.SpanID(),
-	)
 	c := config.New(
 		config.WithSource(
 			file.NewSource(flagconf),
+			// env.NewSource(""), Load env variables from the environment
 		),
 	)
 	defer c.Close()
@@ -118,6 +113,31 @@ func runServer() {
 	if err := c.Scan(&bc); err != nil {
 		panic(err)
 	}
+
+	if bc.Metrics != nil && !bc.Metrics.Disable {
+		go func() {
+			addr := ":8080"
+			if bc.Metrics.Addr != "" {
+				addr = bc.Metrics.Addr
+			}
+			http.Handle("/metrics", promhttp.Handler())
+			if err := http.ListenAndServe(addr, nil); err != nil {
+				panic(err)
+			}
+		}()
+	}
+
+	logger := log.NewLogger(bc.Log)
+	logger.Log(klog.LevelInfo, "msg", "starting logger")
+	logger = klog.With(logger,
+		"level", klog.LevelInfo,
+		"ts", klog.DefaultTimestamp,
+		"caller", klog.DefaultCaller,
+		"service.id", id,
+		"service.name", Name,
+		"service.version", Version,
+	)
+	klog.SetLogger(logger)
 
 	app, cleanup, err := wireApp(bc.Server, bc.Data, logger)
 	if err != nil {
@@ -137,6 +157,7 @@ func validateConfig() {
 	c := config.New(
 		config.WithSource(
 			file.NewSource(flagconf),
+			// env.NewSource(""), Load env variables from the environment
 		),
 	)
 	defer c.Close()
@@ -174,6 +195,18 @@ func validateConfig() {
 			fmt.Printf("  Redis: %s\n", bc.Data.Redis.Addr)
 		}
 	}
+
+	if bc.Log != nil {
+		fmt.Printf("Log configuration:\n")
+		fmt.Printf("  Level: %s\n", bc.Log.Level)
+		fmt.Printf("  Format: %s\n", bc.Log.Format)
+	}
+
+	if bc.Metrics != nil {
+		fmt.Printf("Metrics configuration:\n")
+		fmt.Printf("  Addr: %s\n", bc.Metrics.Addr)
+		fmt.Printf("  Disable: %t\n", bc.Metrics.Disable)
+	}
 }
 
 func runMigrations() {
@@ -183,6 +216,7 @@ func runMigrations() {
 	c := config.New(
 		config.WithSource(
 			file.NewSource(flagconf),
+			// env.NewSource(""), Load env variables from the environment
 		),
 	)
 	defer c.Close()
@@ -217,7 +251,7 @@ func runMigrations() {
 }
 
 func main() {
-	fmt.Println("Starting moho-router...") // 添加这行用于调试
+	fmt.Println("Starting go-template...") // 添加这行用于调试
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 		os.Exit(1)

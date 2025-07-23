@@ -7,7 +7,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"moho-router/api/helloworld/v1"
+	"go-template/api/helloworld/v1"
 	"strconv"
 	"sync"
 	"sync/atomic"
@@ -447,7 +447,7 @@ func (ec *executionContext) _Query_sayHello(ctx context.Context, field graphql.C
 	}
 	res := resTmp.(*v1.HelloReply)
 	fc.Result = res
-	return ec.marshalNHelloReply2ᚖmohoᚑrouterᚋapiᚋhelloworldᚋv1ᚐHelloReply(ctx, field.Selections, res)
+	return ec.marshalNHelloReply2ᚖgoᚑtemplateᚋapiᚋhelloworldᚋv1ᚐHelloReply(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_sayHello(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3030,11 +3030,11 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
-func (ec *executionContext) marshalNHelloReply2mohoᚑrouterᚋapiᚋhelloworldᚋv1ᚐHelloReply(ctx context.Context, sel ast.SelectionSet, v v1.HelloReply) graphql.Marshaler {
+func (ec *executionContext) marshalNHelloReply2goᚑtemplateᚋapiᚋhelloworldᚋv1ᚐHelloReply(ctx context.Context, sel ast.SelectionSet, v v1.HelloReply) graphql.Marshaler {
 	return ec._HelloReply(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNHelloReply2ᚖmohoᚑrouterᚋapiᚋhelloworldᚋv1ᚐHelloReply(ctx context.Context, sel ast.SelectionSet, v *v1.HelloReply) graphql.Marshaler {
+func (ec *executionContext) marshalNHelloReply2ᚖgoᚑtemplateᚋapiᚋhelloworldᚋv1ᚐHelloReply(ctx context.Context, sel ast.SelectionSet, v *v1.HelloReply) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")

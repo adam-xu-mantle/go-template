@@ -1,9 +1,9 @@
 package server
 
 import (
-	v1 "moho-router/api/helloworld/v1"
-	"moho-router/internal/conf"
-	"moho-router/internal/service"
+	v1 "go-template/api/helloworld/v1"
+	"go-template/internal/conf"
+	"go-template/internal/service"
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"

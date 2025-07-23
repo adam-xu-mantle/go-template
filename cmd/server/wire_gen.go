@@ -7,16 +7,15 @@
 package main
 
 import (
+	"go-template/internal/biz"
+	"go-template/internal/conf"
+	"go-template/internal/data"
+	"go-template/internal/server"
+	"go-template/internal/service"
+
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"
-	"moho-router/internal/biz"
-	"moho-router/internal/conf"
-	"moho-router/internal/data"
-	"moho-router/internal/server"
-	"moho-router/internal/service"
-)
 
-import (
 	_ "go.uber.org/automaxprocs"
 )
 

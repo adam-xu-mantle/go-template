@@ -7,11 +7,12 @@
 package v1
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -75,7 +76,7 @@ const file_helloworld_v1_error_reason_proto_rawDesc = "" +
 	"\vErrorReason\x12\x17\n" +
 	"\x13GREETER_UNSPECIFIED\x10\x00\x12\x12\n" +
 	"\x0eUSER_NOT_FOUND\x10\x01BE\n" +
-	"\rhelloworld.v1P\x01Z moho-router/api/helloworld/v1;v1\xa2\x02\x0fAPIHelloworldV1b\x06proto3"
+	"\rhelloworld.v1P\x01Z go-template/api/helloworld/v1;v1\xa2\x02\x0fAPIHelloworldV1b\x06proto3"
 
 var (
 	file_helloworld_v1_error_reason_proto_rawDescOnce sync.Once

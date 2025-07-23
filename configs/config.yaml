@@ -8,8 +8,14 @@ server:
 data:
   database:
     driver: postgres
-    source: postgres://postgres:notsecurepassword@localhost:5432/test?sslmode=disable # DATA_DATABASE_SOURCE
+    source: postgres://postgres:notsecurepassword@localhost:5432/test?sslmode=disable
   redis:
     addr: 127.0.0.1:6379
     read_timeout: 0.2s
     write_timeout: 0.2s
+log:
+  level: DEBUG
+  format: JSON
+  color: true
+metrics:
+  addr: "0.0.0.0:32120"

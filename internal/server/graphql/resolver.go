@@ -1,7 +1,7 @@
 package graphql
 
 import (
-	"moho-router/internal/service"
+	"go-template/internal/service"
 )
 
 // This file will not be regenerated automatically.

@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 
-	v1 "moho-router/api/helloworld/v1"
-	"moho-router/internal/biz"
+	v1 "go-template/api/helloworld/v1"
+	"go-template/internal/biz"
 )
 
 // GreeterService is a greeter service.
