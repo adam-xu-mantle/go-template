@@ -10,6 +10,7 @@ import (
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 )
 
+// GRPCServer wraps grpc.Server to implement kratos transport interface
 type GRPCServer struct {
 	*grpc.Server
 }

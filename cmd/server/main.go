@@ -7,6 +7,7 @@ import (
 	"go-template/internal/server"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
@@ -121,14 +122,23 @@ func runServer() {
 				addr = bc.Metrics.Addr
 			}
 			http.Handle("/metrics", promhttp.Handler())
-			if err := http.ListenAndServe(addr, nil); err != nil {
+
+			server := &http.Server{
+				Addr:         addr,
+				Handler:      nil, // uses DefaultServeMux
+				ReadTimeout:  60 * time.Second,
+				WriteTimeout: 60 * time.Second,
+				IdleTimeout:  60 * time.Second,
+			}
+
+			if err := server.ListenAndServe(); err != nil {
 				panic(err)
 			}
 		}()
 	}
 
 	logger := log.NewLogger(bc.Log)
-	logger.Log(klog.LevelInfo, "msg", "starting logger")
+	_ = logger.Log(klog.LevelInfo, "msg", "starting logger")
 	logger = klog.With(logger,
 		"level", klog.LevelInfo,
 		"ts", klog.DefaultTimestamp,
