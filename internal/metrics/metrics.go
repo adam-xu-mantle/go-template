@@ -2,8 +2,6 @@ package metrics
 
 import "github.com/prometheus/client_golang/prometheus"
 
-var ()
-
 // Metricer is the interface for business metrics.
 type Metricer interface {
 	RecordMetricRequests(path, method string) func()
@@ -14,6 +12,7 @@ type metricer struct {
 	requestDuration *prometheus.HistogramVec
 }
 
+// NewMetricer creates a new Metricer.
 func NewMetricer(name, subname string) Metricer {
 	if name == "" {
 		name = "default"
@@ -48,6 +47,7 @@ func NewMetricer(name, subname string) Metricer {
 	return &m
 }
 
+// RecordMetricRequests records a metric request.
 func (m *metricer) RecordMetricRequests(path, method string) func() {
 	m.requestCount.WithLabelValues(path, method).Inc()
 	timer := prometheus.NewTimer(m.requestDuration.WithLabelValues(path, method))

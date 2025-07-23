@@ -21,10 +21,10 @@ import (
 type HTTPServer struct {
 	*gin.Engine
 	server  *http.Server
+	logger  *log.Helper
 	network string
 	address string
 	timeout time.Duration
-	logger  *log.Helper
 }
 
 // customMiddleware is a middleware that logs the request and response
@@ -158,7 +158,7 @@ func (s *HTTPServer) Start(ctx context.Context) error {
 	}
 
 	go func() {
-		s.server.Serve(listener)
+		_ = s.server.Serve(listener)
 	}()
 
 	return nil
