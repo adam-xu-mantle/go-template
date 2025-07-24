@@ -66,7 +66,7 @@ linters:
     - ineffassign   
     - unused        
     - unconvert     
-    - gofmt       
+    # - gofmt       
     - goimports    
     - misspell    
     - gosec          
